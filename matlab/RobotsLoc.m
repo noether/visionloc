@@ -23,11 +23,13 @@ else
     for i = 1:numrobots
         
         Robots(i).Id = char(inPtr.value(j+1));
-        Robots(i).PosX = inPtr.value(j+2);
-        Robots(i).PosY = inPtr.value(j+3);
-        Robots(i).Heading = inPtr.value(j+4);
+        Robots(i).CorX = inPtr.value(j+2);
+        Robots(i).CorY = inPtr.value(j+3);
+		Robots(i).MidX = inPtr.value(j+4);
+		Robots(i).MidY = inPtr.value(j+5);
+        Robots(i).Heading = inPtr.value(j+6);
         
-        j = j + 4;
+        j = j + 6;
     end
     
 end

@@ -13,8 +13,10 @@ double out[256];
 struct Marker
 {
     uint8_t id;
-    uint16_t posX;
-    uint16_t posY;
+    uint16_t corner_posX;
+    uint16_t corner_posY;
+    uint16_t center_posX;
+    uint16_t center_posY;
     double heading;
 };
 
@@ -98,6 +100,7 @@ void* localization_cam(void *ptr)
         img = dmtxImageCreate(pxl, width, height, DmtxPack8bppK);
 
         dec = dmtxDecodeCreate(img, 1);
+        dmtxDecodeSetProp(dec, DmtxPropSymbolSize, DmtxSymbol10x10);
 
         uint8_t local_numRecog = 0;
         int i;
@@ -117,14 +120,30 @@ void* localization_cam(void *ptr)
                     ss >> marker.id;
 
                     // Intersection of the two solid borders, in pixels
-                    marker.posX = reg->bottomLine.locPos.X;
-                    marker.posY = reg->bottomLine.locPos.Y;
+                    
+                    DmtxVector2 p00, p10, p11, p01;
+                    p00.X = p00.Y = p10.Y = p01.X = 0.0;
+                    p10.X = p01.Y = p11.X = p11.Y = 1.0;
+
+                    dmtxMatrix3VMultiplyBy(&p00, reg->fit2raw);
+                    dmtxMatrix3VMultiplyBy(&p10, reg->fit2raw);
+                    dmtxMatrix3VMultiplyBy(&p11, reg->fit2raw);
+                    dmtxMatrix3VMultiplyBy(&p01, reg->fit2raw);
+
+                    marker.corner_posX = p00.X;
+                    marker.corner_posY = p00.Y;
+
+                    uint16_t cx1 = (p10.X - p00.X)/2 + p00.X;
+                    uint16_t cx2 = (p11.X - p01.X)/2 + p01.X;
+                    uint16_t cy1 = (p01.Y - p00.Y)/2 + p00.Y;
+                    uint16_t cy2 = (p11.Y - p10.Y)/2 + p10.Y;
+
+                    marker.center_posX = (cx1 + cx2)/2;
+                    marker.center_posY = (cy1 + cy2)/2;
 
                     // Angle in degress, w.r.t. the horizontal,
                     // of the bottom solid border, counter-clockwise
-                    marker.heading = atan2(reg->bottomLine.locNeg.Y 
-                            - reg->bottomLine.locPos.Y, reg->bottomLine.locNeg.X 
-                            - reg->bottomLine.locPos.X)*180/M_PI;
+                    marker.heading = 180/M_PI * atan2(p10.Y - p00.Y, p10.X - p00.X);
 
                     local_markers.push_back(marker);
 
@@ -170,8 +189,10 @@ double* read_visionloc()
 
     for (std::vector<Marker>::iterator it = copy.begin(); it != copy.end(); ++it){
         out[j++] = it->id;
-        out[j++] = it->posX;
-        out[j++] = it->posY;
+        out[j++] = it->corner_posX;
+        out[j++] = it->corner_posY;
+        out[j++] = it->center_posX;
+        out[j++] = it->center_posY;
         out[j++] = it->heading;
     }
     

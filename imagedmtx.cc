@@ -30,13 +30,14 @@ int main(int argc, char** argv)
     img = dmtxImageCreate(pxl, width, height, DmtxPack8bppK);
 
     dec = dmtxDecodeCreate(img, 1);
+    dmtxDecodeSetProp(dec, DmtxPropSymbolSize, DmtxSymbol10x10);
 
     std::cout << "Treshold: " << 
         dmtxDecodeGetProp(dec, DmtxPropEdgeThresh)
         << std::endl;
 
     int i; // Number of robots to search
-    
+
     for(i = 0; i < 3; i++){
         reg = dmtxRegionFindNext(dec, NULL);
         if(reg != NULL) {
@@ -44,22 +45,44 @@ int main(int argc, char** argv)
             if(msg != NULL) {
                 // ID of the robot
                 std::cout << "ID: " << msg->output << std::endl;
-                
+
                 // Intersection of the two solid borders, in pixels
-                std::cout << "Position: " << reg->bottomLine.locPos.X 
-                    << ", " << reg->bottomLine.locPos.Y << std::endl;
-                
+                double rotate;
+                DmtxVector2 p00, p10, p11, p01;
+                p00.X = p00.Y = p10.Y = p01.X = 0.0;
+                p10.X = p01.Y = p11.X = p11.Y = 1.0;
+
+                dmtxMatrix3VMultiplyBy(&p00, reg->fit2raw);
+                dmtxMatrix3VMultiplyBy(&p10, reg->fit2raw);
+                dmtxMatrix3VMultiplyBy(&p11, reg->fit2raw);
+                dmtxMatrix3VMultiplyBy(&p01, reg->fit2raw);
+                rotate = 180 / M_PI * atan2(p10.Y - p00.Y, p10.X - p00.X);
+
+                std::cout << "Corner Position: " << (int)p00.X << ", " <<
+                    (int)p00.Y << std::endl;
+
+                uint16_t cx1 = (p10.X - p00.X)/2 + p00.X;
+                uint16_t cx2 = (p11.X - p01.X)/2 + p01.X;
+                uint16_t cy1 = (p01.Y - p00.Y)/2 + p00.Y;
+                uint16_t cy2 = (p11.Y - p10.Y)/2 + p10.Y;
+
+                uint16_t center_posX = (cx1 + cx2)/2;
+                uint16_t center_posY = (cy1 + cy2)/2;
+
+                std::cout << "Center Position: " << center_posX << ", " <<
+                    center_posY << std::endl;
+
                 // Angle in degress, w.r.t. the horizontal,
                 // of the bottom solid border, counter-clockwise
-                std::cout << "Bottom Line angle atan2: " <<
-                    atan2(reg->bottomLine.locNeg.Y - reg->bottomLine.locPos.Y,
-                            reg->bottomLine.locNeg.X - reg->bottomLine.locPos.X)
-                    *180/M_PI << std::endl;
-                std::cout << std::endl;
+                std::cout << "Bottom Line angle " << rotate << std::endl;
+
             }
-            dmtxRegionDestroy(&reg);
+            dmtxMessageDestroy(&msg);
         }
+        dmtxRegionDestroy(&reg);
     }
+    dmtxDecodeDestroy(&dec);
+    dmtxImageDestroy(&img);
 
     return 0;
 }
