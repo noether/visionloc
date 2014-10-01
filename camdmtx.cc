@@ -68,11 +68,15 @@ int main(int argc, char** argv)
         dmtxImageDestroy(&img);
         dmtxDecodeDestroy(&dec);
         cv::namedWindow("frame", CV_WINDOW_AUTOSIZE);
-        cv::imshow("frame", frame);
+        cv::imshow("frame", greyMat);
 
-        if (cv::waitKey(30) == 27) 
+        if (cv::waitKey(30) == 27)
             break; 
     }
+    
+    cap.release();
+    cv::destroyAllWindows();
+
     return 0;
 }
 
