@@ -28,14 +28,11 @@ It is necessary to have installed two libraries:
 
 Compile it!
 
-1. Loading a static image (1600x1200), localizes three robots
+1. imagedtmx: Loads a static image (1600x1200) and localizes three robots
+usage: imagedtmx <path to your image> (you can use the images in the test folder)
 
-g++ imagedtmx.cc -o imagedtmx -ldmtx -lopencv_core -lopencv_highgui
-imagedtmx <path to your image> (you can use the images in the test folder)
-
-2. Stream from the default camera, localizes one robot
-g++ camdmtx.cc -o camdmtx -ldmtx -lopencv_core -lopencv_highgui -lopencv_imgproc
-camdmtx
+2. camdtmx: Streams from the default camera, localizes one robot
+usage: camdmtx
 
 
 2. LIBRARY
