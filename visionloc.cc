@@ -107,11 +107,10 @@ void* localization_cam(void *ptr)
             reg = dmtxRegionFindNext(dec, &timeout);
 
             if(reg != NULL) {
-
                 local_numRecog++;
                 msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
-                if(msg != NULL) {
 
+                if(msg != NULL) {
                     Marker marker;
                     // ID of the robot
                     std::istringstream ss(reinterpret_cast<char*>(msg->output));
