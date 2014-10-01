@@ -15,10 +15,10 @@ all: libvisionloc.so camdmtx imagedmtx
 libvisionloc.so: $(OBJECTS)
 	$(CXX) $(CXXFLAGS_SO) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS)
 
-camdtmx: $(OBJECTS_CAM)
+camdmtx: $(OBJECTS_CAM)
 	$(CXX) camdmtx.cc $(CXXFLAGS) -o $@ $(CXXLIBS)
 
-imagedtmx: $(OBJECTS_IMG)
+imagedmtx: $(OBJECTS_IMG)
 	$(CXX) imagedmtx.cc $(CXXFLAGS) -o $@ $(CXXLIBS)
 
 clean: 
