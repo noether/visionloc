@@ -28,10 +28,10 @@ It is necessary to have installed two libraries:
 
 Compile it!
 
-1. imagedtmx: Loads a static image (1600x1200) and localizes three robots
-usage: imagedtmx <path to your image> (you can use the images in the test folder)
+1. imagedmtx: Loads a static image (1600x1200) and localizes three robots
+usage: imagedmtx <path to your image> (you can use the images in the test folder)
 
-2. camdtmx: Streams from the default camera, localizes one robot
+2. camdmtx: Streams from the default camera, localizes one robot
 usage: camdmtx
 
 

@@ -1,7 +1,7 @@
 SOURCES=visionloc.cc
 OBJECTS=$(patsubst %.cpp,%.o,$(SOURCES))
-OBJECTS_CAM = camdtmx.o
-OBJECTS_IMG = imagedtmx.o
+OBJECTS_CAM = camdmtx.o
+OBJECTS_IMG = imagedmtx.o
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
@@ -10,16 +10,16 @@ CXXFLAGS = -I/usr/include/opencv
 CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -O2
 endif
 
-all: libvisionloc.so camdtmx imagedtmx
+all: libvisionloc.so camdmtx imagedmtx
 
 libvisionloc.so: $(OBJECTS)
 	$(CXX) $(CXXFLAGS_SO) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS)
 
 camdtmx: $(OBJECTS_CAM)
-	$(CXX) camdtmx.cc $(CXXFLAGS) -o $@ $(CXXLIBS)
+	$(CXX) camdmtx.cc $(CXXFLAGS) -o $@ $(CXXLIBS)
 
 imagedtmx: $(OBJECTS_IMG)
-	$(CXX) imagedtmx.cc $(CXXFLAGS) -o $@ $(CXXLIBS)
+	$(CXX) imagedmtx.cc $(CXXFLAGS) -o $@ $(CXXLIBS)
 
 clean: 
-	rm *.o *.so camdtmx imagedtmx
+	rm *.o *.so camdmtx imagedmtx
