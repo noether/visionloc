@@ -1,5 +1,4 @@
 SOURCES=visionloc.cc
-OBJECTS=$(patsubst %.cpp,%.o,$(SOURCES))
 OBJECTS_CAM = camdmtx.o
 OBJECTS_IMG = imagedmtx.o
 
@@ -12,7 +11,7 @@ endif
 
 all: libvisionloc.so camdmtx imagedmtx
 
-libvisionloc.so: $(OBJECTS)
+libvisionloc.so: $(SOURCES)
 	$(CXX) $(CXXFLAGS_SO) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS)
 
 camdmtx: $(OBJECTS_CAM)

@@ -36,8 +36,7 @@ std::vector<Marker> markers;
 pthread_t worker_thread;
 
 pthread_mutex_t mutexLocalization = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t mutexStopThread = PTHREAD_MUTEX_INITIALIZER;
-int stopWorkerTh = 0;
+volatile int stopWorkerTh = 0;
 int worker_running = 0;
 
 extern "C"
@@ -83,14 +82,10 @@ void* localization_cam(void *ptr)
 
     for(;;){
 
-        std::vector<Marker> local_markers;
-
-        pthread_mutex_lock(&mutexStopThread);
-        if(stopWorkerTh){
-            pthread_mutex_unlock(&mutexStopThread);
+        if(stopWorkerTh)
             pthread_exit(0);
-        }
-        pthread_mutex_unlock(&mutexStopThread);
+
+        std::vector<Marker> local_markers;
 
         cap >> frame;
 
@@ -166,9 +161,7 @@ void* localization_cam(void *ptr)
 extern "C"
 void stop_visionloc()
 {
-    pthread_mutex_lock(&mutexStopThread);
     stopWorkerTh = 1;
-    pthread_mutex_unlock(&mutexStopThread);
 
     pthread_join(worker_thread, NULL);
     worker_running = 0;
