@@ -4,20 +4,42 @@
 #include <dmtx.h>
 #include <math.h>
 #include <iostream>
+#include <string>
 
 int main(int argc, char** argv)
 {
-    int width = 1600;
-    int height = 1200;
+    int width;
+    int height;
 
-    cv::VideoCapture cap(0);
-    if(!cap.isOpened())
-        return -1;
-    cap.set(CV_CAP_PROP_FRAME_WIDTH, width);
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT, height);
+    cv::Mat frame;
+    cv::VideoCapture cap;
+    int frnb = 0;
+
+    if(argc == 2){
+        cv::VideoCapture _cap(argv[1]);
+        cap = _cap;
+        cap >> frame;
+        width = frame.size().width;
+        height = frame.size().height;
+        frnb = cap.get(CV_CAP_PROP_FRAME_COUNT);
+    }
+
+    if(argc == 3){
+        std::string ws(argv[1]);
+        std::string hs(argv[2]);
+        width = atoi(ws.c_str());
+        height = atoi(hs.c_str());
+
+        cv::VideoCapture _cap(0);
+        cap = _cap;
+
+        if(!cap.isOpened())
+            return -1;
+        cap.set(CV_CAP_PROP_FRAME_WIDTH, width);
+        cap.set(CV_CAP_PROP_FRAME_HEIGHT, height);
+    }
 
     cv::Mat greyMat(width, height, CV_8UC1);
-    cv::Mat frame;
 
     DmtxImage      *img;
     DmtxDecode     *dec;
@@ -28,8 +50,14 @@ int main(int argc, char** argv)
 
     for(;;){
 
-        cap >> frame;
+        if(argc == 2)
+        {
+            int frid = cap.get(CV_CAP_PROP_POS_FRAMES);
+            if((frnb-3) <= frid)
+                break;
+        }
 
+        cap >> frame;
         cvtColor(frame, greyMat, CV_BGR2GRAY);
 
         uint8_t *pxl = (uint8_t*)greyMat.data;

@@ -31,8 +31,9 @@ Compile it!
 1. imagedmtx: Loads a static image and localizes N markers
 usage: imagedmtx <path to your image> <number of robots> (you can use the images in the test folder)
 
-2. camdmtx: Streams from the default camera, localizes one robot
-usage: camdmtx
+2. camdmtx: Streams from the default camera or video file (there is one demo vido at ./videos), localizes one maker:
+usage for video file: camdmtx <path to your video file>  
+usage for webcam: camdmtx <width> <height>
 
 
 2. LIBRARY
