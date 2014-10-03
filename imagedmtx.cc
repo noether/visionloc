@@ -3,15 +3,15 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <dmtx.h>
 #include <math.h>
+#include <string>
+#include <cstdlib>
 
 
 int main(int argc, char** argv)
 {
-    int width = 1600;
-    int height = 1200;
-
-    cv::Mat image(width, height, CV_8UC1);
-    image = cv::imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
+    std::string nm(argv[2]);
+    int numOfMarkers = atoi(nm.c_str());
+    cv::Mat image = cv::imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
 
     DmtxImage      *img;
     DmtxDecode     *dec;
@@ -19,15 +19,15 @@ int main(int argc, char** argv)
     DmtxMessage    *msg;
 
 
-    if(argc != 2){
-        std::cout << "No image data" << std::endl;
+    if(argc != 3){
+        std::cout << "Usage imagedmtx path_to_image numOfMarkers_to_search" << std::endl;
         return -1;
     }
 
     cv::imshow("Diplay Image", image);
 
     uint8_t *pxl = (uint8_t*)image.data;
-    img = dmtxImageCreate(pxl, width, height, DmtxPack8bppK);
+    img = dmtxImageCreate(pxl, image.size().width, image.size().height, DmtxPack8bppK);
 
     dec = dmtxDecodeCreate(img, 1);
     dmtxDecodeSetProp(dec, DmtxPropSymbolSize, DmtxSymbol10x10);
@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 
     int i; // Number of robots to search
 
-    for(i = 0; i < 3; i++){
+    for(i = 0; i < numOfMarkers; i++){
         reg = dmtxRegionFindNext(dec, NULL);
         if(reg != NULL) {
             msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
