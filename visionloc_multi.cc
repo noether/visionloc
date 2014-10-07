@@ -12,22 +12,22 @@
 double out[256];
 std::vector<Camera> cameras;
 
-    extern "C"
-void start_visionloc(int numMarkers, int width, int height)
+extern "C"
+void start_visionloc()
 {
     parser_xml_to_cameras(&cameras);
     for (std::vector<Camera>::iterator it = cameras.begin() ; it != cameras.end(); ++it)
         it->run();
 }
 
-    extern "C"
+extern "C"
 void stop_visionloc()
 {
     for (std::vector<Camera>::iterator it = cameras.begin() ; it != cameras.end(); ++it)
         it->stop();
 }
 
-    extern "C"
+extern "C"
 double* read_camera(int num_camera)
 {
     int j = 0;
@@ -57,7 +57,7 @@ double* read_camera(int num_camera)
     return out;
 }
 
-    extern "C"
+extern "C"
 double* read_all_cameras()
 {
     int j = 0;

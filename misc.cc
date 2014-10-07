@@ -6,7 +6,7 @@
 #include "misc.hh"
 #include "camera.hh"
 
-void parser_xml_to_camera(std::vector<Camera> *cameras)
+void parser_xml_to_cameras(std::vector<Camera> *cameras)
 {
     tinyxml2::XMLDocument doc;
     doc.LoadFile("camerasInfo.xml");
