@@ -1,11 +1,11 @@
 SOURCE = visionloc.cc
-SOURCES_MULTI = misc.cc camera.cc visionloc_multi.cc
+SOURCES_MULTI = visionloc_multi.cc camera.cc misc.cc
 OBJECTS_CAM = camdmtx.o
 OBJECTS_IMG = imagedmtx.o
 
 CXXFLAGS_SO = -DLINUX -I/usr/include/opencv -fPIC
 CXXFLAGS = -I/usr/include/opencv
-CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -O2
+CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -ltinyxml2 -O2
 
 all: libvisionloc_multi.so libvisionloc.so camdmtx imagedmtx
 
