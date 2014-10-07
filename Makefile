@@ -1,17 +1,18 @@
-SOURCES=visionloc.cc
+SOURCE = visionloc.cc
+SOURCES_MULTI = misc.cc camera.cc visionloc_multi.cc
 OBJECTS_CAM = camdmtx.o
 OBJECTS_IMG = imagedmtx.o
 
-UNAME := $(shell uname)
-ifeq ($(UNAME), Linux)
 CXXFLAGS_SO = -DLINUX -I/usr/include/opencv -fPIC
 CXXFLAGS = -I/usr/include/opencv
 CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -O2
-endif
 
-all: libvisionloc.so camdmtx imagedmtx
+all: libvisionloc_multi.so libvisionloc.so camdmtx imagedmtx
 
 libvisionloc.so: $(SOURCES)
+	$(CXX) $(CXXFLAGS_SO) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS)
+
+libvisionloc_multi.so: $(SOURCES_MULTI)
 	$(CXX) $(CXXFLAGS_SO) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS)
 
 camdmtx: $(OBJECTS_CAM)
