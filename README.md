@@ -36,8 +36,8 @@ usage for video file: camdmtx <path to your video file>
 usage for webcam: camdmtx <width> <height>
 
 
-2. LIBRARY
-----------
+2. LIBRARY for one camera
+-------------------------
 
 The library has three functions.
 
@@ -50,17 +50,37 @@ do not need to localize the robots anymore.
 read_visionloc: reads the last update about the status of the robots. It
 is an array of 256 doubles. The first value is the number of localized
 robots (n) in the frame (always less or equal than the expected number of
-robots). The rest of the array corresponds to 4*n doubles with the information
-of the localized robots. The packet of 4 doubles is always as follows
+robots). The rest of the array corresponds to 6*n doubles with the information
+of the localized robots. The packet of 6 doubles is always as follows
 
 1. ID (the message is a char, so the vale here is the ASCII code)
-2. PosX [pixels]
-3. PosY [pixels]
-4. Heading [degrees], w.r.t the X axis counter clockwise [-pi, pi)
+2. PosX of the Corner [pixels]
+3. PosY of the Corner [pixels]
+4. PosX of the Center [pixels]
+5. PosY of the Center [pixels]
+6. Heading [degrees], w.r.t the X axis counter clockwise [-pi, pi)
+
+3. LIBRARY for multi camera
+---------------------------
+
+First you need to define your cameras in the file camerasInfo.xml.
+
+The library has four functions:
+
+start_visionloc: starts a thread which takes the default camera and 
+updates the status of the robots as soon as it processes one frame.
+
+stop_visionloc: kills the thread, do not forget to call it when you
+do not need to localize the robots anymore.
+
+read_camera(number): reads the last updated about the status of the robots at
+the camera "number". It is an array of 256 doubles. The first value is the id of the camera. The second number is the number of localized robots (n) by the camera (always less or equal than the expected number of robots). The rest of the array corresponds to 6*n doubles with the information of the localized robots (look at read_visionloc)
+
+read_all_cameras: reads the last updated about the status of the robots from
+all the cameras. It is an array of 256 doubles. The array is populated as in read_camera.
 
 
-
-3. USE THE LIBRARY WITH MATLAB
+4. USE THE LIBRARY WITH MATLAB
 ------------------------------
 
 In the Matlab folder, there is an example and some wrappers. In order to make
