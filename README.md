@@ -60,6 +60,10 @@ of the localized robots. The packet of 6 doubles is always as follows
 5. PosY of the Center [pixels]
 6. Heading [degrees], w.r.t the X axis counter clockwise [-pi, pi)
 
+Do not forget to copy the library to your /usr/lib or wherever your
+system can find it.
+
+
 3. LIBRARY for multi camera
 ---------------------------
 
@@ -78,6 +82,9 @@ the camera "number". It is an array of 256 doubles. The first value is the id of
 
 read_all_cameras: reads the last updated about the status of the robots from
 all the cameras. It is an array of 256 doubles. The array is populated as in read_camera.
+
+Do not forget to copy the library to your /usr/lib or wherever your
+system can find it.
 
 
 4. USE THE LIBRARY WITH MATLAB
