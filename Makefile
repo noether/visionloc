@@ -21,5 +21,8 @@ camdmtx: $(OBJECTS_CAM)
 imagedmtx: $(OBJECTS_IMG)
 	$(CXX) imagedmtx.cc $(CXXFLAGS) -o $@ $(CXXLIBS)
 
+example_lib:
+	$(CXX) example_libvisionloc.cc -o example_libvisionloc -lvisionloc_multi
+
 clean: 
-	rm *.o *.so camdmtx imagedmtx
+	rm *.o *.so camdmtx imagedmtx example_libvisionloc

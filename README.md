@@ -15,9 +15,10 @@ at http://datamatrix.kaywa.com/ .
 1. EXAMPLES
 -----------
 
-Here there are two examples/tests. First example searches for three robots in a
+Here there are three examples/tests. First example searches for three robots in a
 single image (ideal for prototyping your setup). The second example involves a
-camera using OpenCV, searches for one robot in every frame, a timeout watches whether a robot is not found.
+camera using OpenCV, searches for one robot in every frame, a timeout watches whether a robot is not found. The third one shows how to use the library for
+multicamera.
 
 The code is quite simple and readable, modify it in order to fit it with
 your requirements such as number of robots, image size, etc.
@@ -34,6 +35,10 @@ usage: imagedmtx <path to your image> <number of robots> (you can use the images
 2. camdmtx: Streams from the default camera or video file (there is one demo vido at ./videos), localizes one maker:
 usage for video file: camdmtx <path to your video file>  
 usage for webcam: camdmtx <width> <height>
+
+3. example_libvisionloc: Reads camerasInfo.xml and extracts the makers from the
+camera 0. Do not forget to compile before the library.
+usage: example_libvisionloc
 
 
 2. LIBRARY for one camera
