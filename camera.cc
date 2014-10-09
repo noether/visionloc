@@ -12,6 +12,7 @@ Camera::Camera(int id_cam, int width, int height, int expected_num_of_markers) :
     _workerTh_running(0),
     _stop_workerTh(0),
     _id_cam(id_cam),
+    _tag(0),
     _expected_num_of_markers(expected_num_of_markers),
     _width(width),
     _height(height)
@@ -27,6 +28,17 @@ Camera::~Camera(void)
 int Camera::get_id_cam()
 {
     return _id_cam;
+}
+
+int Camera::get_tag()
+{
+    int copy;
+    
+    pthread_mutex_lock(&_mutexLocalization);
+    copy = _tag;
+    pthread_mutex_unlock(&_mutexLocalization);
+    
+    return copy;
 }
 
 std::vector<Marker> Camera::get_markers()
@@ -58,6 +70,8 @@ void* Camera::_localization_algorithm(void)
     DmtxMessage    *msg;
     DmtxTime        timeout;
 
+    int smth_detected = 0;
+
     for(;;){
 
         if(_stop_workerTh)
@@ -85,6 +99,7 @@ void* Camera::_localization_algorithm(void)
                 msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
 
                 if(msg != NULL) {
+                    smth_detected = 1;
                     Marker marker;
                     // ID of the robot
                     std::istringstream ss(reinterpret_cast<char*>(msg->output));
@@ -118,7 +133,7 @@ void* Camera::_localization_algorithm(void)
 
                     local_markers.push_back(marker);
 
-					dmtxMessageDestroy(&msg);
+                    dmtxMessageDestroy(&msg);
                 }
                 dmtxRegionDestroy(&reg);
             }else break;
@@ -126,10 +141,15 @@ void* Camera::_localization_algorithm(void)
 
 		dmtxImageDestroy(&img);
 		dmtxDecodeDestroy(&dec);
-
-        pthread_mutex_lock(&_mutexLocalization);
-        _markers = local_markers;
-        pthread_mutex_unlock(&_mutexLocalization);
+        
+        if(smth_detected)
+        {
+            smth_detected = 0;
+            pthread_mutex_lock(&_mutexLocalization);
+            _markers = local_markers;
+            _tag++;
+            pthread_mutex_unlock(&_mutexLocalization);
+        }
     }
 }
 

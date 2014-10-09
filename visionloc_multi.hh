@@ -14,7 +14,9 @@ struct Marker
 extern "C" void start_visionloc();
 extern "C" void stop_visionloc();
 
-extern "C" double* read_camera(int num_cam);
+extern "C" double* read_camera(int);
 extern "C" double* read_all_cameras();
+
+extern "C" int get_tag(int);
 
 std::vector<Marker> get_markers_from_camera(int);

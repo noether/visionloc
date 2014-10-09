@@ -24,6 +24,7 @@ class Camera {
     
     private:
         int _id_cam;
+        int _tag;
         int _width;
         int _height;
         int _expected_num_of_markers;
@@ -41,6 +42,7 @@ class Camera {
         ~Camera(void);
 
         int get_id_cam();
+        int get_tag();
         std::vector<Marker> get_markers();
         
         void run(void);

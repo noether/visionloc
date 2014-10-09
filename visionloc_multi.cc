@@ -10,6 +10,7 @@
 #include "misc.hh"
 
 double out[256];
+int tag;
 std::vector<Camera> cameras;
 
 extern "C"
@@ -81,6 +82,19 @@ double* read_all_cameras()
     }
 
     return out;
+}
+
+extern "C"
+int get_tag(int num_camera)
+{
+    for (std::vector<Camera>::iterator it = cameras.begin() ; it != cameras.end(); ++it)
+    {
+        if(it->get_id_cam() == num_camera)
+        {
+            return it->get_tag();
+        }
+    }
+    return -1;
 }
 
 std::vector<Marker> get_markers_from_camera(int num_camera)
