@@ -27,7 +27,6 @@ class Camera {
         int _width;
         int _height;
         int _expected_num_of_markers;
-        int _num_markers_recog;
         std::vector<Marker> _markers;
 
         pthread_mutex_t _mutexLocalization;
@@ -42,7 +41,7 @@ class Camera {
         ~Camera(void);
 
         int get_id_cam();
-        std::vector<Marker> get_markers(int *);
+        std::vector<Marker> get_markers();
         
         void run(void);
         void stop(void);
