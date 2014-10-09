@@ -37,10 +37,10 @@ double* read_camera(int num_camera)
         if(it->get_id_cam() == num_camera)
         {
             int num_recog;
-            std::vector<Marker> m(it->get_markers(&num_recog));
+            std::vector<Marker> m(it->get_markers());
 
             out[j++] = it->get_id_cam();
-            out[j++] = num_recog;
+            out[j++] = m.size();
 
             for (std::vector<Marker>::iterator itm = m.begin(); itm != m.end(); ++itm){
                 out[j++] = itm->id;
@@ -65,10 +65,10 @@ double* read_all_cameras()
     for (std::vector<Camera>::iterator it = cameras.begin() ; it != cameras.end(); ++it)
     {
         int num_recog;
-        std::vector<Marker> m(it->get_markers(&num_recog));
+        std::vector<Marker> m(it->get_markers());
 
         out[j++] = it->get_id_cam();
-        out[j++] = num_recog;
+        out[j++] = m.size();
 
         for (std::vector<Marker>::iterator itm = m.begin(); itm != m.end(); ++itm){
             out[j++] = itm->id;
@@ -81,4 +81,14 @@ double* read_all_cameras()
     }
 
     return out;
+}
+
+std::vector<Marker> get_markers_from_camera(int num_camera)
+{
+
+    for (std::vector<Camera>::iterator it = cameras.begin() ; it != cameras.end(); ++it)
+    {
+         if(it->get_id_cam() == num_camera)
+             return it->get_markers();
+    }
 }

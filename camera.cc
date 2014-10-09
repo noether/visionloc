@@ -29,13 +29,12 @@ int Camera::get_id_cam()
     return _id_cam;
 }
 
-std::vector<Marker> Camera::get_markers(int *num)
+std::vector<Marker> Camera::get_markers()
 {
     std::vector<Marker> copy;
 
     pthread_mutex_lock(&_mutexLocalization);
     copy = _markers;
-    *num = _num_markers_recog;
     pthread_mutex_unlock(&_mutexLocalization);
 
     return _markers;
@@ -76,7 +75,6 @@ void* Camera::_localization_algorithm(void)
         dec = dmtxDecodeCreate(img, 1);
         dmtxDecodeSetProp(dec, DmtxPropSymbolSize, DmtxSymbol10x10);
 
-        uint8_t local_numRecog = 0;
         int i;
         for(i = 0; i < _expected_num_of_markers; i++){
             // If the algorithm does not find any marker in 100ms, it skips the frame
@@ -84,7 +82,6 @@ void* Camera::_localization_algorithm(void)
             reg = dmtxRegionFindNext(dec, &timeout);
 
             if(reg != NULL) {
-                local_numRecog++;
                 msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
 
                 if(msg != NULL) {
@@ -132,7 +129,6 @@ void* Camera::_localization_algorithm(void)
 
         pthread_mutex_lock(&_mutexLocalization);
         _markers = local_markers;
-        _num_markers_recog = local_numRecog;
         pthread_mutex_unlock(&_mutexLocalization);
     }
 }
