@@ -7,7 +7,7 @@ CXXFLAGS_SO = -DLINUX -I/usr/include/opencv -fPIC
 CXXFLAGS = -I/usr/include/opencv
 CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -ltinyxml2 -O2
 
-all: libvisionloc_multi.so libvisionloc.so camdmtx imagedmtx
+all: libvisionloc_multi.so libvisionloc.so camdmtx imagedmtx example_lib
 
 libvisionloc.so: $(SOURCES)
 	$(CXX) $(CXXFLAGS_SO) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS)
