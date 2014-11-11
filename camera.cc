@@ -102,8 +102,8 @@ void* Camera::_localization_algorithm(void)
                     smth_detected = 1;
                     Marker marker;
                     // ID of the robot
-                    std::istringstream ss(reinterpret_cast<char*>(msg->output));
-                    ss >> marker.id;
+                    marker.id = 
+                        std::atoi((reinterpret_cast<char*>(msg->output)));
 
                     // Intersection of the two solid borders, in pixels
                     

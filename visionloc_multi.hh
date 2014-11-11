@@ -1,3 +1,6 @@
+#ifndef VISIONLOC_MULTI_HH
+#define VISIONLOC_MULTI_HH 1
+
 #include <vector>
 #include <stdint.h>
 
@@ -20,3 +23,5 @@ extern "C" double* read_all_cameras();
 extern "C" int get_tag(int);
 
 std::vector<Marker> get_markers_from_camera(int);
+
+#endif
