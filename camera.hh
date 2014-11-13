@@ -29,8 +29,10 @@ class Camera {
         int _height;
         int _expected_num_of_markers;
         std::vector<Marker> _markers;
+        cv::Mat _greyMat;
 
         pthread_mutex_t _mutexLocalization;
+        pthread_mutex_t _mutexFrame;
         pthread_t _worker_thread;
         int _workerTh_running;
         volatile int _stop_workerTh;
@@ -44,6 +46,7 @@ class Camera {
         int get_id_cam();
         int get_tag();
         std::vector<Marker> get_markers();
+        cv::Mat* get_frame();		// Creates an object cv::Mat. Must be deleted by the caller.
         
         void run(void);
         void stop(void);

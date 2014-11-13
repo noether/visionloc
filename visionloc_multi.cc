@@ -106,3 +106,12 @@ std::vector<Marker> get_markers_from_camera(int num_camera)
              return it->get_markers();
     }
 }
+
+cv::Mat* get_frame_from_camera(int num_camera)
+{
+    for (std::vector<Camera>::iterator it = cameras.begin() ; it != cameras.end(); ++it)
+    {
+        if(it->get_id_cam() == num_camera)
+            return it->get_frame();
+    }
+}

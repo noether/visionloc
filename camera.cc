@@ -15,7 +15,8 @@ Camera::Camera(int id_cam, int width, int height, int expected_num_of_markers) :
     _tag(0),
     _expected_num_of_markers(expected_num_of_markers),
     _width(width),
-    _height(height)
+    _height(height),
+    _greyMat(cv::Mat(_width, _height, CV_8UC1))
 {
 
 }
@@ -49,7 +50,18 @@ std::vector<Marker> Camera::get_markers()
     copy = _markers;
     pthread_mutex_unlock(&_mutexLocalization);
 
-    return _markers;
+    return copy;
+}
+
+cv::Mat* Camera::get_frame()
+{
+    cv::Mat* frame;
+    
+    pthread_mutex_lock(&_mutexFrame);
+    frame = new cv::Mat(_greyMat);
+    pthread_mutex_unlock(&_mutexFrame);
+
+    return frame;
 }
 
 void* Camera::_localization_algorithm(void)
@@ -61,7 +73,6 @@ void* Camera::_localization_algorithm(void)
     cap.set(CV_CAP_PROP_FRAME_WIDTH, _width);
     cap.set(CV_CAP_PROP_FRAME_HEIGHT, _height);
 
-    cv::Mat greyMat(_width, _height, CV_8UC1);
     cv::Mat frame;
 
     DmtxImage      *img;
@@ -81,9 +92,11 @@ void* Camera::_localization_algorithm(void)
 
         cap >> frame;
 
-        cvtColor(frame, greyMat, CV_BGR2GRAY);
+        pthread_mutex_lock(&_mutexFrame);
+        cvtColor(frame, _greyMat, CV_BGR2GRAY);
+        pthread_mutex_unlock(&_mutexFrame);
 
-        uint8_t *pxl = (uint8_t*)greyMat.data;
+        uint8_t *pxl = (uint8_t*)_greyMat.data;
         img = dmtxImageCreate(pxl, _width, _height, DmtxPack8bppK);
 
         dec = dmtxDecodeCreate(img, 1);
