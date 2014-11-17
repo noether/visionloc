@@ -1,4 +1,4 @@
-ALGORITHM FOR THE LOCALIZATION OF ROBOTS EMPLOYING ONE CAMERA 
+ALGORITHM FOR THE LOCALIZATION OF ROBOTS EMPLOYING CAMERAS
 --------------------------------------------------------------
 
 Developed by H. Garcia de Marina
