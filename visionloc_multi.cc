@@ -24,8 +24,10 @@ void start_visionloc()
 extern "C"
 void stop_visionloc()
 {
-    for (std::vector<Camera>::iterator it = cameras.begin() ; it != cameras.end(); ++it)
+    for (std::vector<Camera>::iterator it = cameras.begin() ; it != cameras.end(); ++it) {
         it->stop();
+    }
+    cameras.clear();
 }
 
 extern "C"

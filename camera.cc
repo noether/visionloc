@@ -24,8 +24,8 @@ Camera::Camera(int id_cam, int width, int height, int expected_num_of_markers) :
 
 Camera::~Camera(void)
 {
-    pthread_mutex_destroy(&_mutexLocalization);
-    pthread_mutex_destroy(&_mutexFrame);
+    //pthread_mutex_destroy(&_mutexLocalization);
+    //pthread_mutex_destroy(&_mutexFrame);
 }
 
 int Camera::get_id_cam()
