@@ -1,23 +1,33 @@
 #include "camera.hh"
 #include <dmtx.h>
-#include <math.h>
+#include <cmath>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <pthread.h>
 #include <vector>
 #include <iostream>
+#include <stdexcept>
 
-Camera::Camera(int id_cam, int width, int height, int expected_num_of_markers) :
-    _workerTh_running(0),
-    _stop_workerTh(0),
+Camera::Camera(int id_cam, int width, int height, double wc_height, double wc_offset_x,
+double wc_offset_y, double wc_offset_angle) :
     _id_cam(id_cam),
     _tag(0),
-    _expected_num_of_markers(expected_num_of_markers),
     _width(width),
     _height(height),
-    _greyMat(cv::Mat(_width, _height, CV_8UC1))
+    _wc_offset_x(wc_offset_x),
+    _wc_offset_y(wc_offset_y),
+    _wc_offset_angle(wc_offset_angle),
+    _expected_num_of_markers(0),
+    _workerTh_running(0),
+    _stop_workerTh(0)
 {
+    _resolution = height / wc_height;
+    _sin_a = sin(wc_offset_angle);
+    _cos_a = cos(wc_offset_angle);
+
+    _greyMat = cv::Mat(_width, _height, CV_8UC1);
+
     pthread_mutex_init(&_mutexLocalization, NULL);
     pthread_mutex_init(&_mutexFrame, NULL);
 }
@@ -31,6 +41,16 @@ Camera::~Camera(void)
 int Camera::get_id_cam()
 {
     return _id_cam;
+}
+
+int Camera::get_height()
+{
+    return _height;
+}
+
+int Camera::get_width()
+{
+    return _width;
 }
 
 int Camera::get_tag()
@@ -66,12 +86,19 @@ cv::Mat* Camera::get_frame()
     return frame;
 }
 
+void Camera::set_expected_num_of_markers(int n)
+{
+	_expected_num_of_markers = n;
+}
+
 void* Camera::_localization_algorithm(void)
 {
     cv::VideoCapture cap(_id_cam);
-    if(!cap.isOpened())
+    if(!cap.isOpened()) {
         std::cerr << "Camera " << _id_cam << 
             " is already in use" << std::endl;
+	throw std::runtime_error("camera in use");
+    }
     cap.set(CV_CAP_PROP_FRAME_WIDTH, _width);
     cap.set(CV_CAP_PROP_FRAME_HEIGHT, _height);
 
@@ -105,7 +132,7 @@ void* Camera::_localization_algorithm(void)
         dmtxDecodeSetProp(dec, DmtxPropSymbolSize, DmtxSymbol10x10);
 
         int i;
-        for(i = 0; i < _expected_num_of_markers; i++){
+	for(i = 0; i < _expected_num_of_markers; i++){
             // If the algorithm does not find any marker in 100ms, it skips the frame
             timeout = dmtxTimeAdd(dmtxTimeNow(), 100);
             reg = dmtxRegionFindNext(dec, &timeout);
@@ -131,20 +158,32 @@ void* Camera::_localization_algorithm(void)
                     dmtxMatrix3VMultiplyBy(&p11, reg->fit2raw);
                     dmtxMatrix3VMultiplyBy(&p01, reg->fit2raw);
 
-                    marker.corner_posX = p00.X;
-                    marker.corner_posY = p00.Y;
+                    marker.cam_corner_posX = p00.X;
+                    marker.cam_corner_posY = p00.Y;
 
                     uint16_t cx1 = (p10.X - p00.X)/2 + p00.X;
                     uint16_t cx2 = (p11.X - p01.X)/2 + p01.X;
                     uint16_t cy1 = (p01.Y - p00.Y)/2 + p00.Y;
                     uint16_t cy2 = (p11.Y - p10.Y)/2 + p10.Y;
 
-                    marker.center_posX = (cx1 + cx2)/2;
-                    marker.center_posY = (cy1 + cy2)/2;
+                    marker.cam_center_posX = (cx1 + cx2)/2;
+                    marker.cam_center_posY = (cy1 + cy2)/2;
 
                     // Angle in degress, w.r.t. the horizontal,
                     // of the bottom solid border, counter-clockwise
-                    marker.heading = 180/M_PI * atan2(p10.Y - p00.Y, p10.X - p00.X);
+                    marker.cam_heading = atan2(p10.Y - p00.Y, p10.X - p00.X);
+
+	            marker.wc_corner_posX = marker.cam_corner_posX*_cos_a +
+			    marker.cam_corner_posY*_sin_a + _wc_offset_x;
+		    marker.wc_corner_posY = -marker.cam_corner_posX*_sin_a +
+			    marker.cam_corner_posY*_cos_a + _wc_offset_y;
+
+		    marker.wc_center_posX = marker.cam_center_posX*_cos_a +
+			    marker.cam_center_posY*_sin_a + _wc_offset_x;
+		    marker.wc_center_posY = -marker.cam_center_posX*_sin_a +
+			    marker.cam_center_posY*_cos_a + _wc_offset_y;
+
+		    marker.wc_heading = marker.cam_heading - _wc_offset_angle;
 
                     local_markers.push_back(marker);
 

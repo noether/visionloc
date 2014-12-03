@@ -1,6 +1,19 @@
 <Camera>
 	<ID>0</ID>
+	<Width>800</Width>
+	<Height>600</Height>
+	<WCHeight>115</WCHeight>
+	<WCOffX>0</WCOffX>
+	<WCOffY>0</WCOffY>
+	<WCOffAngle>0</WCOffAngle>
+</Camera>
+
+<Camera>
+	<ID>1</ID>
 	<Width>640</Width>
 	<Height>480</Height>
-	<ExpectedMarkers>1</ExpectedMarkers>
+	<WCHeight>115</WCHeight>
+	<WCOffX>0</WCOffX>
+	<WCOffY>0</WCOffY>
+	<WCOffAngle>0</WCOffAngle>
 </Camera>

@@ -1,28 +1,32 @@
-SOURCE = visionloc.cc
-SOURCES_MULTI = visionloc_multi.cc camera.cc misc.cc
-OBJECTS_CAM = camdmtx.o
-OBJECTS_IMG = imagedmtx.o
+LIB_OBJECTS = visionloc.o camera.o parser.o
 
-CXXFLAGS_SO = -DLINUX -I/usr/include/opencv -fPIC
-CXXFLAGS = -I/usr/include/opencv
-CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -ltinyxml2 -O2
+CXXFLAGS = -DLINUX -I/usr/include/opencv -O2 -Wall 
+CXXFLAGS_SO = $(CXXFLAGS) -fPIC
+CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -ltinyxml2 
 
-all: libvisionloc_multi.so libvisionloc.so camdmtx imagedmtx example_lib
+.PHONY: all clean install
 
-libvisionloc.so: $(SOURCES)
-	$(CXX) $(CXXFLAGS_SO) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS)
+all: libvisionloc.so imagedmtx example_libvisionloc
 
-libvisionloc_multi.so: $(SOURCES_MULTI)
-	$(CXX) $(CXXFLAGS_SO) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS)
+%.o: %.cc
+	$(CXX) $(CXXFLAGS_SO) -c -o $@ $^
 
-camdmtx: $(OBJECTS_CAM)
-	$(CXX) camdmtx.cc $(CXXFLAGS) -o $@ $(CXXLIBS)
+libvisionloc.so: $(LIB_OBJECTS)
+	$(CXX) $(CXXLIBS) -shared -Wl,-soname,$@ -o $@ $^ 
 
-imagedmtx: $(OBJECTS_IMG)
-	$(CXX) imagedmtx.cc $(CXXFLAGS) -o $@ $(CXXLIBS)
 
-example_lib:
-	$(CXX) example_libvisionloc.cc -o example_libvisionloc -lvisionloc_multi
+imagedmtx: imagedmtx.cc 
+	$(CXX) $(CXXFLAGS) $(CXXLIBS) -o $@ imagedmtx.cc
+
+example_libvisionloc: example_libvisionloc.cc libvisionloc.so
+	$(CXX) $(CXXFLAGS) -lvisionloc -lopencv_core -lopencv_imgproc -lopencv_highgui -o $@ example_libvisionloc.cc 
+
 
 clean: 
-	rm *.o *.so camdmtx imagedmtx example_libvisionloc
+	rm *.o *.so imagedmtx example_libvisionloc
+
+install: 
+	rm -f /usr/local/lib/libvisionloc.so
+	ln -s `pwd`/libvisionloc.so /usr/local/lib/libvisionloc.so
+	rm -f /usr/local/include/visionloc.hh
+	ln -s `pwd`/visionloc.hh /usr/local/include/visionloc.hh
