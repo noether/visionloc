@@ -12,7 +12,7 @@
 Camera::Camera(int id_cam, int width, int height, double wc_height, double wc_offset_x,
 double wc_offset_y, double wc_offset_angle) :
     _id_cam(id_cam),
-    _tag(0),
+    _tag(-1),
     _width(width),
     _height(height),
     _wc_offset_x(wc_offset_x),
@@ -97,7 +97,7 @@ void* Camera::_localization_algorithm(void)
     if(!cap.isOpened()) {
         std::cerr << "Camera " << _id_cam << 
             " is already in use" << std::endl;
-	throw std::runtime_error("camera in use");
+	pthread_exit(0);
     }
     cap.set(CV_CAP_PROP_FRAME_WIDTH, _width);
     cap.set(CV_CAP_PROP_FRAME_HEIGHT, _height);
@@ -173,15 +173,15 @@ void* Camera::_localization_algorithm(void)
                     // of the bottom solid border, counter-clockwise
                     marker.cam_heading = atan2(p10.Y - p00.Y, p10.X - p00.X);
 
-	            marker.wc_corner_posX = marker.cam_corner_posX*_cos_a +
-			    marker.cam_corner_posY*_sin_a + _wc_offset_x;
-		    marker.wc_corner_posY = -marker.cam_corner_posX*_sin_a +
-			    marker.cam_corner_posY*_cos_a + _wc_offset_y;
+	            marker.wc_corner_posX = marker.cam_corner_posX*_cos_a/_resolution +
+			    marker.cam_corner_posY*_sin_a/_resolution + _wc_offset_x;
+		    marker.wc_corner_posY = -marker.cam_corner_posX*_sin_a/_resolution +
+			    marker.cam_corner_posY*_cos_a/_resolution + _wc_offset_y;
 
-		    marker.wc_center_posX = marker.cam_center_posX*_cos_a +
-			    marker.cam_center_posY*_sin_a + _wc_offset_x;
-		    marker.wc_center_posY = -marker.cam_center_posX*_sin_a +
-			    marker.cam_center_posY*_cos_a + _wc_offset_y;
+		    marker.wc_center_posX = marker.cam_center_posX*_cos_a/_resolution +
+			    marker.cam_center_posY*_sin_a/_resolution + _wc_offset_x;
+		    marker.wc_center_posY = -marker.cam_center_posX*_sin_a/_resolution +
+			    marker.cam_center_posY*_cos_a/_resolution + _wc_offset_y;
 
 		    marker.wc_heading = marker.cam_heading - _wc_offset_angle;
 

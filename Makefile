@@ -6,7 +6,7 @@ CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -ltin
 
 .PHONY: all clean install
 
-all: libvisionloc.so imagedmtx example_libvisionloc
+all: libvisionloc.so imagedmtx example_libvisionloc calibrate
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS_SO) -c -o $@ $^
@@ -18,12 +18,14 @@ libvisionloc.so: $(LIB_OBJECTS)
 imagedmtx: imagedmtx.cc 
 	$(CXX) $(CXXFLAGS) $(CXXLIBS) -o $@ imagedmtx.cc
 
-example_libvisionloc: example_libvisionloc.cc libvisionloc.so
-	$(CXX) $(CXXFLAGS) -lvisionloc -lopencv_core -lopencv_imgproc -lopencv_highgui -o $@ example_libvisionloc.cc 
+example_libvisionloc: example_libvisionloc.cc
+	$(CXX) $(CXXFLAGS) -lvisionloc -lopencv_core -lopencv_imgproc -lopencv_highgui -o $@ $^
 
+calibrate: calibrate.cc
+	$(CXX) $(CXXFLAGS) -lvisionloc -lopencv_core -lopencv_imgproc -lopencv_highgui -o $@ $^
 
 clean: 
-	rm *.o *.so imagedmtx example_libvisionloc
+	rm *.o *.so imagedmtx example_libvisionloc calibrate
 
 install: 
 	rm -f /usr/local/lib/libvisionloc.so

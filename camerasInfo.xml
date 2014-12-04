@@ -1,13 +1,24 @@
 <Camera>
 	<ID>0</ID>
-	<Width>800</Width>
-	<Height>600</Height>
+	<Width>1280</Width>
+	<Height>720</Height>
 	<WCHeight>115</WCHeight>
 	<WCOffX>0</WCOffX>
 	<WCOffY>0</WCOffY>
 	<WCOffAngle>0</WCOffAngle>
 </Camera>
 
+<Camera>
+	<ID>1</ID>
+	<Width>1280</Width>
+	<Height>720</Height>
+	<WCHeight>114</WCHeight>
+	<WCOffX>1.22397</WCOffX>
+	<WCOffY>93.2798</WCOffY>
+	<WCOffAngle>0.0749418</WCOffAngle>
+</Camera>
+
+<!--
 <Camera>
 	<ID>1</ID>
 	<Width>640</Width>
@@ -17,3 +28,4 @@
 	<WCOffY>0</WCOffY>
 	<WCOffAngle>0</WCOffAngle>
 </Camera>
+-->

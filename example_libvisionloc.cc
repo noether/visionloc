@@ -15,8 +15,15 @@ struct cam_properties {
 	cv::Mat frame;
 };
 
-int main()
+int main(int argc, char* argv[])
 {
+    if (argc != 2) {
+        std::cerr << "Usage example_libvisionloc num_markers" << std::endl;
+        return -1;
+    }
+
+    int nm = std::atoi(argv[1]);
+
     std::vector<Marker> markers;
     int tag;
 
@@ -43,11 +50,11 @@ int main()
         std::cout << "  Cam " << cams[n].id  << ": " << 
 		cams[n].width << "x" <<
 		cams[n].height << std::endl;
-        set_expected_num_of_markers(cams[n].id, 2);
+        set_expected_num_of_markers(cams[n].id, nm);
     }
 
     int i;
-    for(i = 0; i < 10; i++) {
+    for(i = 0; i < 1000; i++) {
         for (int n = 0; n < num_cameras; n++) {
 	
             cv::Mat *grayframe = get_frame_from_camera(cams[n].id);
@@ -87,4 +94,5 @@ int main()
     }
 
     stop_visionloc();
+    delete cams;
 }
