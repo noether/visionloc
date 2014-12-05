@@ -12,17 +12,17 @@ all: libvisionloc.so imagedmtx example_libvisionloc calibrate
 	$(CXX) $(CXXFLAGS_SO) -c -o $@ $^
 
 libvisionloc.so: $(LIB_OBJECTS)
-	$(CXX) $(CXXLIBS) -shared -Wl,-soname,$@ -o $@ $^ 
+	$(CXX) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS) 
 
 
 imagedmtx: imagedmtx.cc 
-	$(CXX) $(CXXFLAGS) $(CXXLIBS) -o $@ imagedmtx.cc
+	$(CXX) $(CXXFLAGS) -o $@ imagedmtx.cc $(CXXLIBS)
 
 example_libvisionloc: example_libvisionloc.cc
-	$(CXX) $(CXXFLAGS) -lvisionloc -lopencv_core -lopencv_imgproc -lopencv_highgui -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ -lvisionloc -lopencv_core -lopencv_imgproc -lopencv_highgui 
 
 calibrate: calibrate.cc
-	$(CXX) $(CXXFLAGS) -lvisionloc -lopencv_core -lopencv_imgproc -lopencv_highgui -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ -lvisionloc -lopencv_core -lopencv_imgproc -lopencv_highgui 
 
 clean: 
 	rm *.o *.so imagedmtx example_libvisionloc calibrate
