@@ -88,7 +88,7 @@ cv::Mat* Camera::get_frame()
 
 void Camera::set_expected_num_of_markers(int n)
 {
-	_expected_num_of_markers = n;
+    _expected_num_of_markers = n;
 }
 
 void* Camera::_localization_algorithm(void)
@@ -97,7 +97,7 @@ void* Camera::_localization_algorithm(void)
     if(!cap.isOpened()) {
         std::cerr << "Camera " << _id_cam << 
             " is already in use" << std::endl;
-	pthread_exit(0);
+        pthread_exit(0);
     }
     cap.set(CV_CAP_PROP_FRAME_WIDTH, _width);
     cap.set(CV_CAP_PROP_FRAME_HEIGHT, _height);
@@ -132,7 +132,7 @@ void* Camera::_localization_algorithm(void)
         dmtxDecodeSetProp(dec, DmtxPropSymbolSize, DmtxSymbol10x10);
 
         int i;
-	for(i = 0; i < _expected_num_of_markers; i++){
+        for(i = 0; i < _expected_num_of_markers; i++){
             // If the algorithm does not find any marker in 100ms, it skips the frame
             timeout = dmtxTimeAdd(dmtxTimeNow(), 100);
             reg = dmtxRegionFindNext(dec, &timeout);
@@ -173,17 +173,17 @@ void* Camera::_localization_algorithm(void)
                     // of the bottom solid border, counter-clockwise
                     marker.cam_heading = atan2(p10.Y - p00.Y, p10.X - p00.X);
 
-	            marker.wc_corner_posX = marker.cam_corner_posX*_cos_a/_resolution +
-			    marker.cam_corner_posY*_sin_a/_resolution + _wc_offset_x;
-		    marker.wc_corner_posY = -marker.cam_corner_posX*_sin_a/_resolution +
-			    marker.cam_corner_posY*_cos_a/_resolution + _wc_offset_y;
+                    marker.wc_corner_posX = marker.cam_corner_posX*_cos_a/_resolution +
+                            marker.cam_corner_posY*_sin_a/_resolution + _wc_offset_x;
+                    marker.wc_corner_posY = -marker.cam_corner_posX*_sin_a/_resolution +
+                            marker.cam_corner_posY*_cos_a/_resolution + _wc_offset_y;
 
-		    marker.wc_center_posX = marker.cam_center_posX*_cos_a/_resolution +
-			    marker.cam_center_posY*_sin_a/_resolution + _wc_offset_x;
-		    marker.wc_center_posY = -marker.cam_center_posX*_sin_a/_resolution +
-			    marker.cam_center_posY*_cos_a/_resolution + _wc_offset_y;
+                    marker.wc_center_posX = marker.cam_center_posX*_cos_a/_resolution +
+                            marker.cam_center_posY*_sin_a/_resolution + _wc_offset_x;
+                    marker.wc_center_posY = -marker.cam_center_posX*_sin_a/_resolution +
+                            marker.cam_center_posY*_cos_a/_resolution + _wc_offset_y;
 
-		    marker.wc_heading = marker.cam_heading - _wc_offset_angle;
+                    marker.wc_heading = marker.cam_heading - _wc_offset_angle;
 
                     local_markers.push_back(marker);
 
@@ -193,8 +193,8 @@ void* Camera::_localization_algorithm(void)
             }else break;
         }
 
-		dmtxImageDestroy(&img);
-		dmtxDecodeDestroy(&dec);
+        dmtxImageDestroy(&img);
+        dmtxDecodeDestroy(&dec);
         
         if(smth_detected)
         {

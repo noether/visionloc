@@ -26,7 +26,7 @@ void parser_xml_to_cameras(std::vector<Camera> *cameras)
 
         Camera camera(atoi(id.c_str()), atoi(width.c_str()),
                 atoi(height.c_str()), atof(wc_height.c_str()), atof(wc_offset_x.c_str()), 
-		atof(wc_offset_y.c_str()), atof(wc_offset_angle.c_str()));
+                atof(wc_offset_y.c_str()), atof(wc_offset_angle.c_str()));
         cameras->push_back(camera);
 
         xml_camera = xml_camera->NextSiblingElement("Camera");

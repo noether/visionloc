@@ -17,7 +17,7 @@ void start_visionloc()
     parser_xml_to_cameras(&cameras);
     for (std::vector<Camera>::iterator it = cameras.begin() ; it != cameras.end(); ++it)
     {
-	sleep(1);
+        sleep(1);
         it->run();
     }
 }
