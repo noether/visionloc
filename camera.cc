@@ -26,7 +26,7 @@ double wc_offset_y, double wc_offset_angle) :
     _sin_a = sin(wc_offset_angle);
     _cos_a = cos(wc_offset_angle);
 
-    _greyMat = cv::Mat(_width, _height, CV_8UC1);
+    _greyMat = cv::Mat(_height, _width, CV_8UC1);
 
     pthread_mutex_init(&_mutexLocalization, NULL);
     pthread_mutex_init(&_mutexFrame, NULL);
