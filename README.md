@@ -38,7 +38,7 @@ camera 0 (possibily multi-camera). Before using this example you need to compile
 usage: example_libvisionloc
 
 
-2. LIBRARY FUNCTIONS
+3. LIBRARY FUNCTIONS
 -------------------------
 
 start_visionloc: starts a thread which takes the default camera and 
@@ -67,10 +67,10 @@ Do not forget to copy the library to your /usr/lib or wherever your
 system can find it.
 
 
-3. USAGE OF THE LIBRARY WITH MATLAB
+4. USAGE OF THE LIBRARY WITH MATLAB
 ------------------------------
 TBA
 
-4. USAGE OF THE LIBRARY WITH PYTHON
+5. USAGE OF THE LIBRARY WITH PYTHON
 -----------------------------------
 TBA
