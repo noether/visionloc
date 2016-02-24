@@ -27,14 +27,18 @@ at http://datamatrix.kaywa.com/ .
 ------------------
 
 1. imagedmtx: Loads a static image and localizes N markers
+
 usage: imagedmtx <path to your image> <number of robots> (you can use the images in the test folder)
 
 2. camdmtx: Streams from the default camera or video file (there is one demo vido at ./videos), localizes one maker:
-usage for video file: camdmtx <path to your video file>  
+
+usage for video file: camdmtx <path to your video file>
+
 usage for webcam: camdmtx <width> <height>
 
 3. example_libvisionloc: Reads camerasInfo.xml and extracts the makers from the
 camera 0 (possibily multi-camera). Before using this example you need to compile  library (following section)
+
 usage: example_libvisionloc
 
 
