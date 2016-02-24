@@ -9,6 +9,11 @@
 
 int main(int argc, char** argv)
 {
+    if(argc != 3){
+        std::cout << "Usage imagedmtx path_to_image numOfMarkers_to_search" << std::endl;
+        return -1;
+    }
+
     std::string nm(argv[2]);
     int numOfMarkers = atoi(nm.c_str());
     cv::Mat image = cv::imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
@@ -17,12 +22,6 @@ int main(int argc, char** argv)
     DmtxDecode     *dec;
     DmtxRegion     *reg;
     DmtxMessage    *msg;
-
-
-    if(argc != 3){
-        std::cout << "Usage imagedmtx path_to_image numOfMarkers_to_search" << std::endl;
-        return -1;
-    }
 
     cv::imshow("Diplay Image", image);
 
