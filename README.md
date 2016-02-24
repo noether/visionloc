@@ -4,7 +4,7 @@ LIGHT VISION LOCALIZATION ALGORITHM
 Author: H. Garcia de Marina  
 Contact mail: noeth3r@gmail.com  
 Webpage: http://masteringrobotics.com/  
-Licence: GNU GPL V3, http://www.gnu.org/licenses/gpl-3.0.en.html
+Licence: GNU GPL V2, http://www.gnu.org/licenses/gpl-2.0.en.html
 
 0. COMPILING REQUIREMENTS
 -------------------------
@@ -33,6 +33,11 @@ usage: example_libvisionloc
 3. USAGE camerasInfo.xml
 ------------------------
 
+ID: identification number of the camera.
+Width, Height: Resolution of the camera.
+WcHeight: It sets the ratio between camera's pixel and the World coordinates. For a direct correspondence, set it to the same number as Height.
+WCOffX, WCOffY: Offset of the origin of the camera w.r.t. World Coordinates.
+WCOffAngle: Rotation of the camera w.r.t. World Coordinates.
 
 4. LIBRARY FUNCTIONS
 -------------------------
@@ -72,7 +77,7 @@ system can find it.
 
 5. USAGE OF THE LIBRARY WITH MATLAB
 ------------------------------
-Call from Matlab 'read_camera' and process the array of doubles.
+In the ./matlab directory you can find a practical example.
 
 
 6. USAGE OF THE LIBRARY WITH PYTHON

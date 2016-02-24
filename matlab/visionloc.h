@@ -1,4 +1,4 @@
-void start_visionloc(int numMarkers, int width, int height);
+void start_visionloc();
 void stop_visionloc();
 
-double* read_visionloc();
+double* read_camera(int);

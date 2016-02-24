@@ -1,12 +1,13 @@
-function [allrobots, Robots] = RobotsLoc(n)
+function [allrobots, Robots] = RobotsLoc(camera, n)
 
+%camera: camera ID
 %n: number of expected robots
 % allrobots: 1 if all the expected robots were localized, 0 otherwise.
 % Robots: struct with the information about the robots
 
 allrobots = 0;
 
-inPtr = calllib('libvisionloc','read_visionloc');
+inPtr = calllib('libvisionloc','read_camera', camera);
 setdatatype(inPtr, 'doublePtr', 1, 256);
 numrobots = int8(inPtr.value(1));
 

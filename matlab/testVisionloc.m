@@ -2,11 +2,11 @@
 clc; clear all; close all;
 
 % Start the parallel thread of localization
-startLocalizingRobots(1, 1600, 1200);
+startLocalizingRobots();
 
 % Do your stuff here
 
-[allrobots, Robots] = RobotsLoc(1);
+[allrobots, Robots] = RobotsLoc(0, 1);
 
 % Do your stuff here
 

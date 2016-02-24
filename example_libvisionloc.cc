@@ -40,7 +40,6 @@ int main(int argc, char* argv[])
         cams[n].width = get_cam_width(cams[n].id);
         cams[n].height = get_cam_height(cams[n].id);
 
-
         std::ostringstream oss;
         oss << "Cam" << cams[n].id;
         cams[n].window = oss.str();
