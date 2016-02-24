@@ -29,6 +29,7 @@
 
 # swap
 *.*~
+*.swp
 
 imagedmtx
 example_libvisionloc

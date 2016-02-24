@@ -6,22 +6,22 @@
 #include <vector>
 
 class Camera {
-    
+
     private:
         int _id_cam;
         int _tag;
         int _width;
         int _height;
-	double _resolution; 
-	double _wc_offset_x;
-	double _wc_offset_y;
-	double _wc_offset_angle;
+        double _resolution;
+        double _wc_offset_x;
+        double _wc_offset_y;
+        double _wc_offset_angle;
         int _expected_num_of_markers;
         std::vector<Marker> _markers;
         cv::Mat _greyMat;
 
-	double _sin_a;
-	double _cos_a;
+        double _sin_a;
+        double _cos_a;
 
         pthread_mutex_t _mutexLocalization;
         pthread_mutex_t _mutexFrame;
@@ -36,15 +36,15 @@ class Camera {
         ~Camera(void);
 
         int get_id_cam();
-	int get_width();
-	int get_height();
+        int get_width();
+        int get_height();
         int get_tag();
         std::vector<Marker> get_markers();
         cv::Mat* get_frame();		// Creates an object cv::Mat. Must be deleted by the caller.
 
-	void set_expected_num_of_markers(int);
+        void set_expected_num_of_markers(int);
 
-        
+
         void run(void);
         void stop(void);
 };

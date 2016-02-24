@@ -14,8 +14,7 @@ all: libvisionloc.so imagedmtx example_libvisionloc calibrate
 libvisionloc.so: $(LIB_OBJECTS)
 	$(CXX) -shared -Wl,-soname,$@ -o $@ $^ $(CXXLIBS) 
 
-
-imagedmtx: imagedmtx.cc 
+imagedmtx: imagedmtx.cc
 	$(CXX) $(CXXFLAGS) -o $@ imagedmtx.cc $(CXXLIBS)
 
 example_libvisionloc: example_libvisionloc.cc

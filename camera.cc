@@ -148,7 +148,6 @@ void* Camera::_localization_algorithm(void)
                         std::atoi((reinterpret_cast<char*>(msg->output)));
 
                     // Intersection of the two solid borders, in pixels
-                    
                     DmtxVector2 p00, p10, p11, p01;
                     p00.X = p00.Y = p10.Y = p01.X = 0.0;
                     p10.X = p01.Y = p11.X = p11.Y = 1.0;

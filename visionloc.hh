@@ -33,7 +33,6 @@ extern "C" int set_expected_num_of_markers(int num_camera, int num_markers);
 extern "C" int get_cam_width(int cam);
 extern "C" int get_cam_height(int cam);
 
-
 std::vector<int> get_active_cameras(void);
 
 std::vector<Marker> get_markers_from_camera(int);
