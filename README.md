@@ -1,19 +1,11 @@
 LIGHT VISION LOCALIZATION ALGORITHM
 --------------------------------------------------------------
 
-Author: H. Garcia de Marina
-
-Contact mail: noeth3r@gmail.com
-
-Webpage: http://masteringrobotics.com/
-
-Licence: GNU GPL V3, http://www.gnu.org/licenses/gpl-3.0.en.html
+Author: H. Garcia de Marina  Contact mail: noeth3r@gmail.com  Webpage: http://masteringrobotics.com/  Licence: GNU GPL V3, http://www.gnu.org/licenses/gpl-3.0.en.html
 
 0. COMPILING REQUIREMENTS
 -------------------------
-It is necessary to have installed two libraries:
-1. libdmtx http://www.libdmtx.org/
-2. opencv  http://opencv.org/
+It is necessary to have installed two libraries:  1. libdmtx http://www.libdmtx.org/  2. opencv  http://opencv.org/
 
 
 1. IMAGES
@@ -26,9 +18,7 @@ at http://datamatrix.kaywa.com/ .
 2. DIRECT EXAMPLES
 ------------------
 
-1. imagedmtx: Loads a static image and localizes N markers
-
-usage: imagedmtx <path to your image> <number of robots> (you can use the images in the test folder)
+1. imagedmtx: Loads a static image and localizes N markers  usage: imagedmtx \<path to your image\> \<number of robots\> (you can use the images in the test folder)
 
 2. camdmtx: Streams from the default camera or video file (there is one demo vido at ./videos), localizes one maker:
 
