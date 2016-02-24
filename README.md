@@ -33,10 +33,10 @@ usage: example_libvisionloc
 3. USAGE camerasInfo.xml
 ------------------------
 
-ID: identification number of the camera.
-Width, Height: Resolution of the camera.
-WcHeight: It sets the ratio between camera's pixel and the World coordinates. For a direct correspondence, set it to the same number as Height.
-WCOffX, WCOffY: Offset of the origin of the camera w.r.t. World Coordinates.
+ID: identification number of the camera.  
+Width, Height: Resolution of the camera.  
+WcHeight: It sets the ratio between camera's pixel and the World coordinates. For a direct correspondence, set it to the same number as Height.  
+WCOffX, WCOffY: Offset of the origin of the camera w.r.t. World Coordinates.  
 WCOffAngle: Rotation of the camera w.r.t. World Coordinates.
 
 4. LIBRARY FUNCTIONS
