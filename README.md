@@ -2,7 +2,9 @@ LIGHT VISION LOCALIZATION ALGORITHM
 --------------------------------------------------------------
 
 Author: H. Garcia de Marina
+
 Contact mail: noeth3r@gmail.com
+
 Webpage: http://masteringrobotics.com/
 
 Licence: GNU GPL V3, http://www.gnu.org/licenses/gpl-3.0.en.html
