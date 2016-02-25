@@ -3,7 +3,7 @@ LIGHT VISION LOCALIZATION ALGORITHM
 
 Author: H. Garcia de Marina  
 Contact mail: noeth3r@gmail.com  
-Webpage/Forum: http://masteringrobotics.com/tools/visionloc
+Webpage/Forum: http://masteringrobotics.com/tools/visionloc  
 Licence: GNU GPL V2, http://www.gnu.org/licenses/gpl-2.0.en.html
 
 Light C++ library for the localization of markers on a 2D surface. The functions from this library can be called from C, C++, Matlab or Python. It interfaces the connected cameras to your PC and as a result it gives you the position and orientation of the markers in XY World coordinates. The algorithm runs in a parallel thread to your main application, so it will not block your main program. That makes attractive the usage of the library in real-time scenarios. Check the source code for examples of usage.
