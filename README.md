@@ -11,7 +11,7 @@ Light C++ library for the localization of markers on a 2D surface. The functions
 0. COMPILING REQUIREMENTS
 -------------------------
 It is necessary to have installed two libraries:  
-1. libdmtx http://www.libdmtx.org/  
+1. libdmtx http://libdmtx.sourceforge.net/
 2. opencv  http://opencv.org/
 
 
