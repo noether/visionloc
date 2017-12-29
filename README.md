@@ -81,5 +81,7 @@ Place a marker(s) in the overlapped area and run calibration_2_cameras . The out
 ## 6. TO DO
 --------
 Python support
-Support of more markers such as Aruco or Apriltags
-Calibration of cameras
+
+Support of more markers such as Aruco or Apriltags 
+
+Calibration of cameras 
