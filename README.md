@@ -1,5 +1,4 @@
-LIGHT VISION LOCALIZATION ALGORITHM
---------------------------------------------------------------
+# LIGHT VISION LOCALIZATION ALGORITHM
 
 Authors: H. Garcia de Marina and Miguel Martinez
 Contact mail: noeth3r at gmail dot com  
@@ -10,22 +9,19 @@ Light C++ library for the localization of markers on a 2D surface. The functions
 
 It is possible to have more than one camera connected at the same time. Each local frame of coordinates (offset of the lower left corner and rotation w.r.t. World coordinates) are set in the file camerasInfo.xml. The library interfaces the connected camera(s) to your PC (employing openCV) and as a result it gives you the position and orientation of the markers in XY World coordinates. The algorithm runs in a parallel thread to your main application, so it will not block your main program. That makes attractive the usage of the library in real-time scenarios. Check the example_libvisionloc.cc as an example of usage.
 
-0. COMPILING REQUIREMENTS
--------------------------
+## 0. COMPILING REQUIREMENTS
 It is necessary to have installed three libraries:
 1. libdmtx 0.7.4 http://libdmtx.sourceforge.net/
 2. libopencv 3.1.0 http://opencv.org/
 3. libtinyxml2 5.0.1 http://www.grinninglizard.com/tinyxml2/
 
 
-1. IMAGES
----------
+## 1. IMAGES
 There are some test images in the images folder and some markers 
 in the markers folder. The markers are 2D data matrices generated
 at http://datamatrix.kaywa.com/ .
 
-2. EXAMPLES
------------
+## 2. EXAMPLES
 1. imagedmtx: Loads a static image and localizes N markers. You do not need the library libvisionloc for this example. In fact, you do not need of OpenCV for
 this example.
 
@@ -35,16 +31,14 @@ usage: imagedmtx \<path to your image\> \<number of robots\> (you can use the im
 camera 0 (possibily multi-camera). You need to compile the library libvisionloc first.
 usage: example_libvisionloc
 
-2.5. USAGE camerasInfo.xml
-------------------------
+### 2.5. USAGE camerasInfo.xml
 ID: identification number of the camera.  
 Width, Height: Resolution of the camera.  
 WcHeight: It sets the ratio between camera's pixel and the World coordinates. For a direct correspondence, set it to the same number as Height.  
 WCOffX, WCOffY: Offset of the origin of the camera w.r.t. World Coordinates.  
 WCOffAngle: Rotation of the camera w.r.t. World Coordinates.
 
-3. LIBRARY FUNCTIONS
--------------------------
+## 3. LIBRARY FUNCTIONS
 start_visionloc: starts a thread which takes the default camera and 
 updates the status of the robots as soon as it processes one frame.
 
@@ -78,15 +72,13 @@ Do not forget to copy the library to your /usr/lib or wherever your
 system can find it.
 
 
-4. USAGE OF THE LIBRARY WITH MATLAB
------------------------------------
+## 4. USAGE OF THE LIBRARY WITH MATLAB
 In the ./matlab directory you can find a practical example.
 
-5. Calibration for two overlapped cameras
------------------------------------------
+## 5. Calibration for two overlapped cameras
 Place a marker(s) in the overlapped area and run calibration_2_cameras . The output will suggest the parameters for the World Coordinates in camerasInfo.xml
 
-6. TO DO
+## 6. TO DO
 --------
 Python support
 Support of more markers such as Aruco or Apriltags
