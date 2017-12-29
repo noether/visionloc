@@ -2,7 +2,7 @@ LIB_OBJECTS = visionloc.o camera.o parser.o
 
 CXXFLAGS = -DLINUX -I/usr/include/opencv -O2 -Wall 
 CXXFLAGS_SO = $(CXXFLAGS) -fPIC
-CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -ltinyxml2 
+CXXLIBS = -ldmtx -lpthread -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgproc -lopencv_videoio -lopencv_imgcodecs -ltinyxml2
 
 .PHONY: all clean install
 
