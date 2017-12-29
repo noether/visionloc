@@ -82,7 +82,11 @@ system can find it.
 -----------------------------------
 In the ./matlab directory you can find a practical example.
 
-5. TO DO
+5. Calibration for two overlapped cameras
+-----------------------------------------
+Place a marker(s) in the overlapped area and run calibration_2_cameras . The output will suggest the parameters for the World Coordinates in camerasInfo.xml
+
+6. TO DO
 --------
 Python support
 Support of more markers such as Aruco or Apriltags
