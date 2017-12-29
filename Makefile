@@ -24,7 +24,7 @@ calibration_2_cameras: calibration_2_cameras.cc
 	$(CXX) $(CXXFLAGS) -o $@ $^ -lvisionloc -lopencv_core -lopencv_imgproc -lopencv_highgui
 
 clean: 
-	rm *.o *.so imagedmtx example_libvisionloc calibrate
+	rm *.o *.so imagedmtx example_libvisionloc calibration_2_cameras
 
 install: 
 	rm -f /usr/local/lib/libvisionloc.so
