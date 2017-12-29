@@ -1,7 +1,7 @@
 LIGHT VISION LOCALIZATION ALGORITHM
 --------------------------------------------------------------
 
-Author: H. Garcia de Marina  
+Authors: H. Garcia de Marina and Miguel Martinez
 Contact mail: noeth3r at gmail dot com  
 Webpage/Forum: http://dobratech.com/tools/visionloc  
 Licence: GNU GPL V2, http://www.gnu.org/licenses/gpl-2.0.en.html
