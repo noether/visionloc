@@ -70,7 +70,8 @@ int main(int argc, char* argv[])
             {
                 std::cout << "    Marker " << (int)(itm->id) << " at ("
                     << itm->wc_corner_posX <<", "
-                    << itm->wc_corner_posY <<")" << std::endl;
+                    << itm->wc_corner_posY <<")"
+                    << " with world heading " << itm->wc_heading << std::endl;
                 std::ostringstream oss;
                 oss << (int)(itm->id);
 
